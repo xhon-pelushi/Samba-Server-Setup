@@ -1,0 +1,35 @@
+Samba Server Setup - Quick Steps
+================================
+
+1. Install Ubuntu 20.04 Server
+2. Update & Install Samba:
+   sudo apt-get update
+   sudo apt-get install samba
+3. Backup the default Samba config:
+   sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+4. Create shared directories:
+   sudo mkdir /home/sharefolder
+   sudo mkdir /media/fileserver/shareusb
+5. Edit /etc/samba/smb.conf and add:
+   [sharefolder]
+      comment = 1st folder
+      path = /home/sharefolder
+      browsable = yes
+      read only = no
+      writeable = yes
+   [shareusb]
+      comment = usb folder
+      path = /media/fileserver/shareusb
+      browsable = yes
+      read only = no
+      writeable = yes
+6. Restart Samba:
+   sudo service smbd restart
+7. Set Samba password for user:
+   sudo smbpasswd -a root
+8. Allow Samba through firewall:
+   sudo ufw allow samba
+9. Check server IP address:
+   ifconfig   # or   ip addr
+
+For full details and troubleshooting, see the README.md and samba server.docx.
